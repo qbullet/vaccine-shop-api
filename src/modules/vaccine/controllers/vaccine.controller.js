@@ -1,60 +1,57 @@
 const humps = require('humps')
-
-const vaccines = [
-  {
-    id: '001',
-    name: 'Sinovac',
-    responsibility: 30
-  },
-  {
-    id: '002',
-    name: 'Aztrazeneca',
-    responsibility: 45
-  },
-  {
-    id: '003',
-    name: 'Moderna',
-    responsibility: 90
-  },
-  {
-    id: '004',
-    name: 'Sinopharm',
-    responsibility: 70
-  },
-  {
-    id: '005',
-    name: 'Pfizer',
-    responsibility: 95
-  }
-]
+const VaccineService = require('../services/vaccine.service')
 
 const vaccineController = {
-  getVaccine (req, res) {
-    const responsibility = req?.query?.responsibility || 0
-    const found = vaccines.filter((vaccine) => vaccine.responsibility >= +responsibility)
+  async getVaccines (req, res) {
+    const { quality, quantity } = humps.camelizeKeys(req.query)
+    const query = {
+      quality: quality || { $ne: null },
+      quantity: quantity || { $ne: null }
+    }
+
+    const found = await VaccineService.getAll(query)
 
     res.json({
       success: true,
       data: found
     }).status(200)
   },
-  getVaccineById (req, res) {
+  async getVaccineById (req, res) {
     const { id } = req.params
-    const found = vaccines.find((vaccine) => vaccine.id === id)
+    const found = await VaccineService.getOneById(id)
 
     res.json({
       success: true,
       data: found
     }).status(200)
   },
-  createVaccine (req, res) {
-    const { id, name, responsibility } = req.body
-    vaccines.push({ id, name, responsibility })
+  async createVaccine (req, res) {
+    const { name, quantity, quality } = humps.camelizeKeys(req.body)
+    const created = await VaccineService.create({ name, quantity, quality })
 
     res.json({
       succes: true,
-      data: vaccines
+      data: created
     }).status(201)
+  },
+  async updateVaccine (req, res) {
+    const { id } = req.params
+    const { name, quantity, quality } = humps.camelizeKeys(req.body)
+    const updated = await VaccineService.updateById(id, { name, quantity, quality })
+
+    res.json({
+      succes: true,
+      data: updated
+    }).status(200)
+  },
+  async deleteVaccine (req, res) {
+    const { id } = req.params
+    const deleted = await VaccineService.deleteById(id)
+    
+    res.json({
+      succes: true,
+      data: updated
+    }).status(200)
   }
 }
 

@@ -7,8 +7,10 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-router.get('/', vaccineController.getVaccine)
+router.get('/', vaccineController.getVaccines)
 router.get('/:id', vaccineController.getVaccineById)
 router.post('/', vaccineController.createVaccine)
+router.put('/', vaccineController.updateVaccine)
+router.delete('/', vaccineController.deleteVaccine)
 
 module.exports = router
