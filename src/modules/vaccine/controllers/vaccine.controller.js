@@ -57,7 +57,7 @@ const vaccineController = {
     
     res.json({
       succes: true,
-      data: updated
+      data: deleted
     }).status(200)
   }
 }
