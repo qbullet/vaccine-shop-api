@@ -7,6 +7,7 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
+router.get('/test', vaccineController.test)
 router.get('/', vaccineController.getVaccines)
 router.get('/:id', vaccineController.getVaccineById)
 router.post('/', vaccineController.createVaccine)

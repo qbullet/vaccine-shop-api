@@ -2,6 +2,13 @@ const humps = require('humps')
 const VaccineService = require('../services/vaccine.service')
 
 const vaccineController = {
+  async test (req, res) {
+
+    res.json({
+      success: true,
+      data: 'It\'s Worked'
+    }).status(200)
+  },
   async getVaccines (req, res) {
     const { quality, quantity } = humps.camelizeKeys(req.query)
     const query = {
