@@ -11,7 +11,7 @@ router.get('/test', vaccineController.test)
 router.get('/', vaccineController.getVaccines)
 router.get('/:id', vaccineController.getVaccineById)
 router.post('/', vaccineController.createVaccine)
-router.put('/', vaccineController.updateVaccine)
-router.delete('/', vaccineController.deleteVaccine)
+router.put('/:id', vaccineController.updateVaccine)
+router.delete('/:id', vaccineController.deleteVaccine)
 
 module.exports = router
